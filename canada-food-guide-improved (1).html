@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canada's Food Guide — Reimagined</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #D62B2B;
+    --red-light: #F5E8E8;
+    --maple: #C8511A;
+    --green: #2D6A4F;
+    --green-light: #D8F3DC;
+    --yellow: #F4C430;
+    --cream: #FBF7F0;
+    --dark: #1A1A1A;
+    --mid: #4A4A4A;
+    --soft: #8A8A8A;
+    --white: #FFFFFF;
+    --border: #E8E0D5;
+    --shadow: rgba(0,0,0,0.08);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--white);
+    border-bottom: 2px solid var(--dark);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem; height: 64px;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900; font-size: 1.1rem;
+    color: var(--dark); text-decoration: none;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .nav-logo .maple-icon { color: var(--red); font-size: 1.3rem; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--mid);
+    font-size: 0.875rem; font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--red); }
+  .nav-cta {
+    background: var(--red); color: white;
+    border: none; padding: 0.5rem 1.25rem;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600; font-size: 0.875rem;
+    border-radius: 2rem; cursor: pointer;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: #B52020; }
+
+  /* ─── HERO ─── */
+  .hero {
+    background: var(--dark);
+    min-height: 88vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+    position: relative;
+  }
+  .hero-text {
+    padding: 5rem 3rem 5rem 4rem;
+    display: flex; flex-direction: column; justify-content: center;
+    position: relative; z-index: 2;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--red); color: white;
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 0.35rem 0.8rem;
+    border-radius: 2px; width: fit-content; margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5vw, 4.2rem);
+    font-weight: 900; line-height: 1.1;
+    color: var(--white); margin-bottom: 1.5rem;
+  }
+  .hero h1 em { font-style: italic; color: var(--yellow); }
+  .hero-desc {
+    font-size: 1.1rem; line-height: 1.7;
+    color: rgba(255,255,255,0.7);
+    max-width: 480px; margin-bottom: 2.5rem;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--red); color: white;
+    padding: 0.875rem 2rem; border-radius: 3px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600; font-size: 0.95rem;
+    border: 2px solid var(--red);
+    cursor: pointer; transition: all 0.2s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-primary:hover { background: transparent; color: var(--red); }
+  .btn-secondary {
+    background: transparent; color: white;
+    padding: 0.875rem 2rem; border-radius: 3px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600; font-size: 0.95rem;
+    border: 2px solid rgba(255,255,255,0.4);
+    cursor: pointer; transition: all 0.2s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-secondary:hover { border-color: white; }
+  .hero-visual {
+    position: relative; overflow: hidden;
+    background: linear-gradient(135deg, #1e3a2f 0%, #2D6A4F 50%, #1a4a35 100%);
+  }
+  .hero-plate {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .plate-circle {
+    width: min(420px, 85%);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--white);
+    box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+    position: relative; overflow: hidden;
+  }
+  .plate-half {
+    position: absolute; height: 100%; width: 50%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 8px; padding: 1.5rem;
+  }
+  .plate-half.left { left: 0; background: var(--green-light); border-right: 3px solid var(--white); }
+  .plate-half.right { right: 0; display: grid; grid-template-rows: 1fr 1fr; gap: 0; }
+  .plate-quarter {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; padding: 1rem;
+  }
+  .plate-quarter.top { background: #FFF3E0; border-bottom: 3px solid var(--white); }
+  .plate-quarter.bottom { background: #E8F5E9; }
+  .plate-icon { font-size: 2rem; margin-bottom: 4px; }
+  .plate-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.65rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    text-align: center; color: var(--mid);
+  }
+  .plate-pct {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem; font-weight: 900;
+    color: var(--dark); line-height: 1;
+  }
+  .plate-line {
+    position: absolute; top: 0; left: 50%;
+    width: 3px; height: 100%; background: white; z-index: 1;
+    transform: translateX(-50%);
+  }
+  .hero-stats {
+    position: absolute; bottom: 2rem; left: 50%;
+    transform: translateX(-50%);
+    display: flex; gap: 1.5rem;
+  }
+  .stat-pill {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 0.6rem 1rem; border-radius: 2rem;
+    color: white; font-size: 0.8rem; font-weight: 500;
+    white-space: nowrap;
+  }
+  .stat-pill strong { color: var(--yellow); }
+
+  /* ─── IMPROVEMENTS BANNER ─── */
+  .improvements-banner {
+    background: var(--red); color: white;
+    padding: 1rem 4rem;
+    display: flex; align-items: center; gap: 2rem;
+    overflow-x: auto;
+  }
+  .imp-label {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; white-space: nowrap;
+    opacity: 0.8;
+  }
+  .imp-items {
+    display: flex; gap: 1.5rem; align-items: center;
+  }
+  .imp-item {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.82rem; font-weight: 500; white-space: nowrap;
+  }
+  .imp-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--yellow); flex-shrink: 0; }
+
+  /* ─── SECTIONS ─── */
+  section { padding: 5rem 4rem; }
+  .section-label {
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--red);
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 700; line-height: 1.2;
+    color: var(--dark); margin-bottom: 1rem;
+  }
+  .section-desc {
+    font-size: 1rem; line-height: 1.7;
+    color: var(--mid); max-width: 600px; margin-bottom: 3rem;
+  }
+
+  /* ─── PLATE BUILDER ─── */
+  #builder { background: var(--white); border-top: 2px solid var(--dark); border-bottom: 2px solid var(--dark); }
+  .builder-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: start;
+  }
+  .food-categories { display: flex; flex-direction: column; gap: 1rem; }
+  .category-card {
+    border: 2px solid var(--border);
+    border-radius: 8px; overflow: hidden;
+    transition: border-color 0.2s;
+    cursor: pointer;
+  }
+  .category-card:hover { border-color: var(--green); }
+  .category-card.active { border-color: var(--green); background: var(--green-light); }
+  .category-header {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1rem 1.25rem;
+  }
+  .cat-icon { font-size: 1.5rem; width: 2.5rem; text-align: center; }
+  .cat-info { flex: 1; }
+  .cat-name { font-weight: 600; font-size: 0.95rem; }
+  .cat-desc { font-size: 0.8rem; color: var(--soft); margin-top: 2px; }
+  .cat-amount {
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .cat-btn {
+    width: 28px; height: 28px; border-radius: 50%;
+    border: 2px solid var(--border); background: white;
+    font-size: 1rem; cursor: pointer; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s; color: var(--dark);
+    line-height: 1;
+  }
+  .cat-btn:hover { border-color: var(--green); color: var(--green); }
+  .cat-count {
+    font-weight: 700; font-size: 1rem; min-width: 24px; text-align: center;
+  }
+  .plate-visual-wrapper { position: sticky; top: 80px; }
+  .plate-builder-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; font-weight: 700;
+    margin-bottom: 1.5rem; color: var(--dark);
+  }
+  .plate-display {
+    width: 300px; height: 300px; border-radius: 50%;
+    border: 4px solid var(--dark);
+    position: relative; overflow: hidden;
+    margin: 0 auto 1.5rem;
+    background: #f8f5f0;
+    transition: all 0.3s ease;
+  }
+  .plate-segment {
+    position: absolute; inset: 0;
+    transition: all 0.4s ease;
+  }
+  .seg-veggies { background: #4CAF50; opacity: 0; transition: opacity 0.4s; }
+  .seg-protein { background: #FF7043; opacity: 0; transition: opacity 0.4s; }
+  .seg-grains  { background: #FDD835; opacity: 0; transition: opacity 0.4s; }
+  .seg-water   { background: #42A5F5; opacity: 0; transition: opacity 0.4s; }
+  .plate-center {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    pointer-events: none;
+  }
+  .plate-score {
+    text-align: center;
+    background: white; border-radius: 50%;
+    width: 110px; height: 110px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    border: 3px solid var(--dark);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  }
+  .score-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 900; line-height: 1;
+    color: var(--dark);
+  }
+  .score-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.05em; color: var(--soft); text-transform: uppercase; }
+  .plate-feedback {
+    background: var(--cream); border: 2px solid var(--border);
+    border-radius: 8px; padding: 1.25rem;
+    font-size: 0.875rem; line-height: 1.6; color: var(--mid);
+    min-height: 80px;
+  }
+  .plate-feedback strong { color: var(--dark); }
+  .plate-legend {
+    display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1rem;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 0.4rem;
+    font-size: 0.78rem; color: var(--mid);
+  }
+  .legend-dot {
+    width: 12px; height: 12px; border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  /* ─── QUIZ ─── */
+  #quiz { background: var(--dark); color: white; }
+  #quiz .section-title { color: white; }
+  #quiz .section-desc { color: rgba(255,255,255,0.65); }
+  .quiz-card {
+    background: #2a2a2a;
+    border: 1px solid #3a3a3a;
+    border-radius: 12px; padding: 2.5rem;
+    max-width: 720px;
+  }
+  .quiz-progress-bar {
+    height: 4px; background: #3a3a3a;
+    border-radius: 2px; margin-bottom: 2rem; overflow: hidden;
+  }
+  .quiz-progress-fill {
+    height: 100%; background: var(--red);
+    border-radius: 2px; transition: width 0.3s ease;
+    width: 0%;
+  }
+  .quiz-q-num {
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--red); margin-bottom: 1rem;
+  }
+  .quiz-question {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; font-weight: 700;
+    line-height: 1.4; color: white; margin-bottom: 2rem;
+  }
+  .quiz-options { display: flex; flex-direction: column; gap: 0.75rem; }
+  .quiz-option {
+    background: #333; border: 2px solid #444;
+    border-radius: 8px; padding: 1rem 1.25rem;
+    color: rgba(255,255,255,0.85); font-size: 0.9rem;
+    cursor: pointer; transition: all 0.15s; text-align: left;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .quiz-option:hover:not(.selected):not(.correct):not(.wrong) {
+    border-color: var(--red); color: white;
+  }
+  .quiz-option.correct { border-color: #4CAF50; background: rgba(76,175,80,0.15); color: #81C784; }
+  .quiz-option.wrong { border-color: #ef5350; background: rgba(239,83,80,0.15); color: #ef9a9a; }
+  .quiz-option.selected { border-color: var(--yellow); background: rgba(244,196,48,0.1); }
+  .quiz-feedback {
+    margin-top: 1.5rem; padding: 1rem 1.25rem;
+    border-radius: 8px; font-size: 0.875rem; line-height: 1.6;
+    display: none;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.correct-fb { background: rgba(76,175,80,0.15); border: 1px solid #4CAF50; color: #81C784; }
+  .quiz-feedback.wrong-fb { background: rgba(239,83,80,0.12); border: 1px solid #ef5350; color: #ef9a9a; }
+  .quiz-next {
+    margin-top: 1.5rem; padding: 0.875rem 2rem;
+    background: var(--red); color: white; border: none;
+    border-radius: 6px; font-family: 'DM Sans', sans-serif;
+    font-weight: 600; font-size: 0.9rem; cursor: pointer;
+    display: none; transition: background 0.2s;
+  }
+  .quiz-next:hover { background: #B52020; }
+  .quiz-next.show { display: inline-block; }
+  .quiz-result {
+    text-align: center; padding: 2rem 0;
+    display: none;
+  }
+  .quiz-result.show { display: block; }
+  .result-score {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem; font-weight: 900; color: var(--yellow);
+    line-height: 1;
+  }
+  .result-msg {
+    font-size: 1.1rem; color: rgba(255,255,255,0.8);
+    margin: 1rem 0 2rem;
+  }
+  .quiz-restart {
+    background: transparent; color: var(--red);
+    border: 2px solid var(--red); padding: 0.75rem 1.75rem;
+    border-radius: 6px; font-family: 'DM Sans', sans-serif;
+    font-weight: 600; cursor: pointer; transition: all 0.2s;
+  }
+  .quiz-restart:hover { background: var(--red); color: white; }
+
+  /* ─── TIPS SECTION ─── */
+  #tips { background: var(--cream); }
+  .tips-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem; margin-top: 1rem;
+  }
+  .tip-card {
+    background: var(--white); border: 2px solid var(--border);
+    border-radius: 10px; padding: 1.75rem;
+    transition: all 0.2s; cursor: pointer; position: relative; overflow: hidden;
+  }
+  .tip-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: var(--green); opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .tip-card:hover::before { opacity: 0.03; }
+  .tip-card:hover { border-color: var(--green); transform: translateY(-3px); box-shadow: 0 12px 30px var(--shadow); }
+  .tip-card .tip-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+  .tip-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; font-weight: 700;
+    margin-bottom: 0.5rem; color: var(--dark);
+    position: relative;
+  }
+  .tip-card p { font-size: 0.875rem; line-height: 1.65; color: var(--mid); position: relative; }
+  .tip-expand {
+    margin-top: 0.75rem; font-size: 0.8rem; font-weight: 600;
+    color: var(--green); cursor: pointer; display: flex; align-items: center; gap: 4px;
+    position: relative;
+  }
+  .tip-detail {
+    display: none; margin-top: 0.75rem;
+    font-size: 0.825rem; line-height: 1.6; color: var(--mid);
+    border-top: 1px solid var(--border); padding-top: 0.75rem;
+    position: relative;
+  }
+  .tip-detail.open { display: block; }
+
+  /* ─── LABEL DECODER ─── */
+  #decoder { background: var(--white); border-top: 2px solid var(--dark); border-bottom: 2px solid var(--dark); }
+  .decoder-layout { display: grid; grid-template-columns: auto 1fr; gap: 3rem; align-items: start; }
+  .fake-label {
+    background: white;
+    border: 2px solid var(--dark);
+    border-radius: 4px; padding: 1.5rem;
+    width: 260px; font-size: 0.8rem;
+    position: sticky; top: 80px;
+    box-shadow: 8px 8px 0 var(--dark);
+  }
+  .label-title {
+    font-size: 1.6rem; font-weight: 900; border-bottom: 8px solid var(--dark);
+    padding-bottom: 4px; margin-bottom: 8px;
+  }
+  .label-serving { font-size: 0.7rem; border-bottom: 1px solid #999; padding-bottom: 6px; margin-bottom: 4px; }
+  .label-calories { font-size: 2rem; font-weight: 900; display: flex; justify-content: space-between; align-items: baseline; border-bottom: 4px solid var(--dark); padding-bottom: 4px; margin-bottom: 4px; }
+  .label-row {
+    display: flex; justify-content: space-between;
+    padding: 3px 0; font-size: 0.72rem;
+    border-bottom: 0.5px solid #ccc; cursor: pointer;
+    transition: background 0.15s;
+    border-radius: 3px; padding-left: 2px; padding-right: 2px;
+  }
+  .label-row:hover { background: #fff3cd; }
+  .label-row.highlighted { background: #fff3cd; font-weight: 700; }
+  .label-row.subrow { padding-left: 1.5rem; }
+  .label-footer {
+    font-size: 0.62rem; color: #555; border-top: 1px solid #999;
+    padding-top: 6px; margin-top: 4px; line-height: 1.4;
+  }
+  .decoder-explainers { display: flex; flex-direction: column; gap: 1rem; }
+  .explainer-card {
+    border: 2px solid var(--border); border-radius: 8px;
+    padding: 1.25rem 1.5rem; cursor: pointer;
+    transition: all 0.15s;
+  }
+  .explainer-card:hover { border-color: var(--maple); }
+  .explainer-card.active { border-color: var(--maple); background: #fff8f5; }
+  .explainer-header {
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .explainer-icon { font-size: 1.4rem; }
+  .explainer-title { font-weight: 700; font-size: 0.95rem; flex: 1; }
+  .explainer-badge {
+    font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.5rem;
+    border-radius: 3px; text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .badge-good { background: var(--green-light); color: var(--green); }
+  .badge-watch { background: #fff3e0; color: var(--maple); }
+  .badge-limit { background: var(--red-light); color: var(--red); }
+  .explainer-body {
+    display: none; margin-top: 0.75rem; padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.875rem; line-height: 1.65; color: var(--mid);
+  }
+  .explainer-body.open { display: block; }
+
+  /* ─── MEAL TIMING ─── */
+  #timing { background: var(--green); color: white; }
+  #timing .section-title { color: white; }
+  #timing .section-desc { color: rgba(255,255,255,0.75); }
+  .timeline {
+    display: flex; gap: 0; position: relative;
+    overflow-x: auto; padding-bottom: 1rem;
+  }
+  .timeline::before {
+    content: ''; position: absolute;
+    top: 40px; left: 0; right: 0; height: 2px;
+    background: rgba(255,255,255,0.3);
+  }
+  .timeline-stop {
+    flex: 1; min-width: 150px;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 0 1rem; text-align: center; cursor: pointer;
+  }
+  .timeline-dot {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: rgba(255,255,255,0.3); border: 3px solid white;
+    position: relative; z-index: 1; margin-bottom: 1rem;
+    transition: all 0.2s; margin-top: 30px;
+  }
+  .timeline-stop.active .timeline-dot,
+  .timeline-stop:hover .timeline-dot {
+    background: var(--yellow); border-color: var(--yellow);
+    transform: scale(1.3);
+  }
+  .timeline-time { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; color: var(--yellow); margin-bottom: 0.25rem; }
+  .timeline-meal { font-weight: 600; font-size: 0.9rem; color: white; margin-bottom: 0.25rem; }
+  .timeline-note { font-size: 0.78rem; color: rgba(255,255,255,0.65); line-height: 1.4; }
+  .meal-detail {
+    background: rgba(0,0,0,0.2); border-radius: 10px;
+    padding: 1.5rem 2rem; margin-top: 2.5rem;
+    display: none;
+  }
+  .meal-detail.active { display: block; }
+  .meal-detail h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; color: white; margin-bottom: 0.75rem;
+  }
+  .meal-detail-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+  }
+  .meal-item {
+    background: rgba(255,255,255,0.1); border-radius: 8px;
+    padding: 0.875rem; font-size: 0.85rem; color: rgba(255,255,255,0.9);
+  }
+  .meal-item-icon { font-size: 1.2rem; margin-bottom: 4px; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--dark); color: rgba(255,255,255,0.6);
+    padding: 3rem 4rem;
+    display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 3rem; border-top: 2px solid #333;
+  }
+  footer h4 {
+    font-family: 'Playfair Display', serif;
+    color: white; font-size: 0.95rem; margin-bottom: 1rem;
+  }
+  footer ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  footer a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.85rem; transition: color 0.15s; }
+  footer a:hover { color: white; }
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; font-weight: 900; color: white;
+    margin-bottom: 0.75rem; display: flex; align-items: center; gap: 8px;
+  }
+  .footer-note { font-size: 0.8rem; line-height: 1.6; }
+  .footer-disclaimer {
+    background: #111; padding: 1.25rem 4rem;
+    font-size: 0.75rem; color: rgba(255,255,255,0.35);
+    border-top: 1px solid #222;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+
+  /* ─── IMPROVEMENT CALLOUT ─── */
+  .improvement-note {
+    position: absolute; top: 8px; right: 8px;
+    background: var(--yellow); color: var(--dark);
+    font-size: 0.65rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.05em;
+    padding: 2px 6px; border-radius: 3px;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-visual { min-height: 300px; }
+    section { padding: 3.5rem 1.5rem; }
+    .builder-grid { grid-template-columns: 1fr; }
+    .plate-visual-wrapper { position: static; }
+    .tips-grid { grid-template-columns: 1fr; }
+    .decoder-layout { grid-template-columns: 1fr; }
+    .fake-label { width: 100%; position: static; }
+    .meal-detail-grid { grid-template-columns: 1fr 1fr; }
+    footer { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    .improvements-banner { padding: 1rem 1.5rem; }
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { animation: fadeUp 0.6s ease forwards; }
+  .fade-up-2 { animation: fadeUp 0.6s 0.15s ease forwards; opacity: 0; }
+  .fade-up-3 { animation: fadeUp 0.6s 0.3s ease forwards; opacity: 0; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo"><span class="maple-icon">🍁</span> Canada's Food Guide</a>
+  <ul class="nav-links">
+    <li><a href="#builder">Plate Builder</a></li>
+    <li><a href="#quiz">Quiz</a></li>
+    <li><a href="#tips">Eating Tips</a></li>
+    <li><a href="#decoder">Label Decoder</a></li>
+    <li><a href="#timing">Meal Timing</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})">Test Your Knowledge</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="padding:0">
+  <div class="hero-text">
+    <span class="hero-eyebrow fade-up">🍁 Health Canada — Reimagined 2024</span>
+    <h1 class="fade-up-2">Eat <em>well,</em><br>live fully.</h1>
+    <p class="hero-desc fade-up-3">Canada's Food Guide, rebuilt as an interactive learning experience. Explore the plate model, test your knowledge, decode food labels, and build lasting healthy habits.</p>
+    <div class="hero-actions fade-up-3">
+      <a href="#builder" class="btn-primary">Build Your Plate</a>
+      <a href="#quiz" class="btn-secondary">Take the Quiz</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-plate">
+      <div class="plate-circle">
+        <div class="plate-half left">
+          <div class="plate-icon">🥦</div>
+          <div class="plate-pct">½</div>
+          <div class="plate-label">Vegetables<br>& Fruits</div>
+        </div>
+        <div class="plate-half right">
+          <div class="plate-quarter top">
+            <div class="plate-icon">🍗</div>
+            <div class="plate-pct">¼</div>
+            <div class="plate-label">Protein<br>Foods</div>
+          </div>
+          <div class="plate-quarter bottom">
+            <div class="plate-icon">🌾</div>
+            <div class="plate-pct">¼</div>
+            <div class="plate-label">Whole<br>Grains</div>
+          </div>
+        </div>
+        <div class="plate-line"></div>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-pill"><strong>½</strong> veggies & fruits</div>
+      <div class="stat-pill"><strong>¼</strong> proteins</div>
+      <div class="stat-pill"><strong>¼</strong> whole grains</div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPROVEMENTS BANNER -->
+<div class="improvements-banner">
+  <span class="imp-label">✦ Improvements over original</span>
+  <div class="imp-items">
+    <div class="imp-item"><span class="imp-dot"></span>Interactive plate builder</div>
+    <div class="imp-item"><span class="imp-dot"></span>Knowledge quiz with feedback</div>
+    <div class="imp-item"><span class="imp-dot"></span>Nutrition label decoder</div>
+    <div class="imp-item"><span class="imp-dot"></span>Meal timing guide</div>
+    <div class="imp-item"><span class="imp-dot"></span>Plain-language explanations</div>
+    <div class="imp-item"><span class="imp-dot"></span>Mobile-first design</div>
+  </div>
+</div>
+
+<!-- PLATE BUILDER -->
+<section id="builder">
+  <div class="section-label">✦ Interactive Tool</div>
+  <div class="section-title">Build your ideal plate</div>
+  <p class="section-desc">Use the controls to add foods from each group and watch your plate fill up in real time. Get instant feedback on how balanced your meal is.</p>
+
+  <div class="builder-grid">
+    <div class="food-categories">
+
+      <div class="category-card" id="card-veg">
+        <div class="category-header">
+          <span class="cat-icon">🥦</span>
+          <div class="cat-info">
+            <div class="cat-name">Vegetables & Fruits</div>
+            <div class="cat-desc">Fresh, frozen, or canned — all count!</div>
+          </div>
+          <div class="cat-amount">
+            <button class="cat-btn" onclick="adjustFood('veg',-1)">−</button>
+            <span class="cat-count" id="count-veg">0</span>
+            <button class="cat-btn" onclick="adjustFood('veg',1)">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="category-card" id="card-protein">
+        <div class="category-header">
+          <span class="cat-icon">🍗</span>
+          <div class="cat-info">
+            <div class="cat-name">Protein Foods</div>
+            <div class="cat-desc">Legumes, fish, poultry, eggs, tofu, nuts</div>
+          </div>
+          <div class="cat-amount">
+            <button class="cat-btn" onclick="adjustFood('protein',-1)">−</button>
+            <span class="cat-count" id="count-protein">0</span>
+            <button class="cat-btn" onclick="adjustFood('protein',1)">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="category-card" id="card-grains">
+        <div class="category-header">
+          <span class="cat-icon">🌾</span>
+          <div class="cat-info">
+            <div class="cat-name">Whole Grain Foods</div>
+            <div class="cat-desc">Oats, brown rice, whole wheat, quinoa</div>
+          </div>
+          <div class="cat-amount">
+            <button class="cat-btn" onclick="adjustFood('grains',-1)">−</button>
+            <span class="cat-count" id="count-grains">0</span>
+            <button class="cat-btn" onclick="adjustFood('grains',1)">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="category-card" id="card-water">
+        <div class="category-header">
+          <span class="cat-icon">💧</span>
+          <div class="cat-info">
+            <div class="cat-name">Water</div>
+            <div class="cat-desc">Make water your drink of choice</div>
+          </div>
+          <div class="cat-amount">
+            <button class="cat-btn" onclick="adjustFood('water',-1)">−</button>
+            <span class="cat-count" id="count-water">0</span>
+            <button class="cat-btn" onclick="adjustFood('water',1)">+</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="plate-visual-wrapper">
+      <div class="plate-builder-title">Your Plate</div>
+      <div class="plate-display" id="plateDisplay">
+        <canvas id="plateCanvas" width="300" height="300" style="position:absolute;inset:0;border-radius:50%;"></canvas>
+        <div class="plate-center">
+          <div class="plate-score">
+            <div class="score-num" id="plateScore">0</div>
+            <div class="score-label">Score</div>
+          </div>
+        </div>
+      </div>
+      <div class="plate-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#4CAF50"></div>Vegetables & Fruits</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#FF7043"></div>Protein</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#FDD835"></div>Grains</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#42A5F5"></div>Water</div>
+      </div>
+      <div class="plate-feedback" id="plateFeedback" style="margin-top:1rem;">
+        👆 Start adding foods to see how your plate compares to the Food Guide recommendation.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz">
+  <div class="section-label">✦ Test Your Knowledge</div>
+  <div class="section-title">How food-smart are you?</div>
+  <p class="section-desc">5 questions drawn from Canada's Food Guide. Get instant explanations for every answer — right or wrong.</p>
+
+  <div class="quiz-card">
+    <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgress"></div></div>
+    <div id="quizMain">
+      <div class="quiz-q-num" id="quizNum">Question 1 of 5</div>
+      <div class="quiz-question" id="quizQuestion"></div>
+      <div class="quiz-options" id="quizOptions"></div>
+      <div class="quiz-feedback" id="quizFeedback"></div>
+      <button class="quiz-next" id="quizNext" onclick="nextQuestion()">Next Question →</button>
+    </div>
+    <div class="quiz-result" id="quizResult">
+      <div class="result-score" id="resultScore">0/5</div>
+      <div class="result-msg" id="resultMsg"></div>
+      <button class="quiz-restart" onclick="startQuiz()">Try Again</button>
+    </div>
+  </div>
+</section>
+
+<!-- TIPS -->
+<section id="tips">
+  <div class="section-label">✦ Healthy Eating Tips</div>
+  <div class="section-title">Beyond what you eat</div>
+  <p class="section-desc">Canada's Food Guide emphasizes that healthy eating is also about <em>how</em> you eat — your habits, mindset, and environment matter just as much as your food choices.</p>
+
+  <div class="tips-grid">
+
+    <div class="tip-card">
+      <span class="tip-icon">🧘</span>
+      <h3>Be Mindful</h3>
+      <p>Eat slowly, without distractions. Pay attention to hunger and fullness cues.</p>
+      <div class="tip-expand" onclick="toggleTip(this)">Learn more ↓</div>
+      <div class="tip-detail">Mindful eating means noticing the colours, smells, textures, and flavours of your food. Try putting your fork down between bites. Avoid eating in front of screens — it leads to consuming 15–25% more calories without realizing it.</div>
+    </div>
+
+    <div class="tip-card">
+      <span class="tip-icon">🍳</span>
+      <h3>Cook More Often</h3>
+      <p>Home cooking gives you control over ingredients, portions, and nutrition.</p>
+      <div class="tip-expand" onclick="toggleTip(this)">Learn more ↓</div>
+      <div class="tip-detail">People who cook at home more frequently eat fewer calories, less sugar, and less fat. Even simple meals matter. Batch cooking on weekends can make weeknight meals stress-free. Frozen vegetables and canned legumes are healthy shortcuts.</div>
+    </div>
+
+    <div class="tip-card">
+      <span class="tip-icon">😊</span>
+      <h3>Enjoy Your Food</h3>
+      <p>Food is about pleasure and culture, not just nutrients. Enjoy every meal.</p>
+      <div class="tip-expand" onclick="toggleTip(this)">Learn more ↓</div>
+      <div class="tip-detail">A positive relationship with food supports both physical and mental health. Avoid guilt around eating. All foods can fit into a balanced diet — the key is overall patterns over time, not single meals. Celebrate cultural food traditions.</div>
+    </div>
+
+    <div class="tip-card">
+      <span class="tip-icon">👥</span>
+      <h3>Eat with Others</h3>
+      <p>Sharing meals strengthens social bonds and promotes healthier eating habits.</p>
+      <div class="tip-expand" onclick="toggleTip(this)">Learn more ↓</div>
+      <div class="tip-detail">Research shows people who eat with others regularly are more likely to eat a wider variety of nutritious foods. Family meals are especially important for children, but community eating benefits adults too. Try scheduling one shared meal per day.</div>
+    </div>
+
+    <div class="tip-card">
+      <span class="tip-icon">🚫</span>
+      <h3>Limit Processed Foods</h3>
+      <p>Highly processed foods are often high in sodium, sugar, and unhealthy fats.</p>
+      <div class="tip-expand" onclick="toggleTip(this)">Learn more ↓</div>
+      <div class="tip-detail">Ultra-processed foods include packaged snacks, fast food, sugary drinks, and many breakfast cereals. They account for nearly half of Canadians' daily caloric intake. Focus on whole or minimally processed foods as the majority of your diet.</div>
+    </div>
+
+    <div class="tip-card">
+      <span class="tip-icon">📺</span>
+      <h3>Know Food Marketing</h3>
+      <p>Advertising is designed to influence your choices — often toward unhealthy options.</p>
+      <div class="tip-expand" onclick="toggleTip(this)">Learn more ↓</div>
+      <div class="tip-detail">Health claims on packaging can be misleading. "Natural," "low fat," or "multigrain" doesn't always mean nutritious. Always check the Nutrition Facts table. Children are particularly vulnerable to food marketing — Health Canada is working to restrict it.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- LABEL DECODER -->
+<section id="decoder">
+  <div class="section-label">✦ Interactive Tool</div>
+  <div class="section-title">Decode a nutrition label</div>
+  <p class="section-desc">Click on any row of the sample nutrition label to get a plain-language explanation of what it means and what to look for.</p>
+
+  <div class="decoder-layout">
+    <div class="fake-label">
+      <div style="position:relative"><span class="improvement-note">NEW</span></div>
+      <div class="label-title">Nutrition Facts</div>
+      <div class="label-serving">Per 1 cup (250 mL) | About 4 servings per container</div>
+      <div class="label-calories"><span>Calories</span><span>210</span></div>
+      <div style="font-size:0.65rem;margin-bottom:4px;text-align:right;color:#666">% Daily Value *</div>
+
+      <div class="label-row" onclick="highlightLabel(this,'fat')">
+        <span><b>Total Fat</b> 8g</span><span><b>10%</b></span>
+      </div>
+      <div class="label-row subrow" onclick="highlightLabel(this,'satfat')">
+        <span>Saturated fat 2g</span><span>10%</span>
+      </div>
+      <div class="label-row subrow" onclick="highlightLabel(this,'transfat')">
+        <span>Trans fat 0g</span><span></span>
+      </div>
+      <div class="label-row" onclick="highlightLabel(this,'sodium')">
+        <span><b>Sodium</b> 480mg</span><span><b>21%</b></span>
+      </div>
+      <div class="label-row" onclick="highlightLabel(this,'carbs')">
+        <span><b>Total Carbohydrate</b> 37g</span><span><b>13%</b></span>
+      </div>
+      <div class="label-row subrow" onclick="highlightLabel(this,'fibre')">
+        <span>Dietary Fibre 4g</span><span>14%</span>
+      </div>
+      <div class="label-row subrow" onclick="highlightLabel(this,'sugar')">
+        <span>Total Sugars 12g</span><span></span>
+      </div>
+      <div class="label-row" onclick="highlightLabel(this,'protein')">
+        <span><b>Protein</b> 3g</span><span></span>
+      </div>
+      <div class="label-row" onclick="highlightLabel(this,'vitamin')">
+        <span>Vitamin D 2mcg</span><span>10%</span>
+      </div>
+      <div class="label-row" onclick="highlightLabel(this,'calcium')">
+        <span>Calcium 260mg</span><span>20%</span>
+      </div>
+      <div class="label-footer">* 5% or less is a little, 15% or more is a lot.</div>
+    </div>
+
+    <div class="decoder-explainers">
+      <p style="font-size:0.875rem;color:var(--soft);margin-bottom:0.5rem">← Click a row on the label to learn more</p>
+
+      <div class="explainer-card" id="exp-fat" data-key="fat">
+        <div class="explainer-header">
+          <span class="explainer-icon">🥑</span>
+          <span class="explainer-title">Total Fat</span>
+          <span class="explainer-badge badge-watch">Watch</span>
+        </div>
+        <div class="explainer-body">
+          Fat is essential for your body — but not all fats are equal. The total fat line includes healthy unsaturated fats (from avocado, nuts, olive oil) and less healthy saturated fats. Aim to get fats mostly from plant-based sources. <strong>10% DV is moderate</strong> — not a concern on its own.
+        </div>
+      </div>
+
+      <div class="explainer-card" id="exp-satfat" data-key="satfat">
+        <div class="explainer-header">
+          <span class="explainer-icon">🧈</span>
+          <span class="explainer-title">Saturated Fat</span>
+          <span class="explainer-badge badge-limit">Limit</span>
+        </div>
+        <div class="explainer-body">
+          Saturated fat is found in butter, fatty meats, and full-fat dairy. Too much can raise LDL ("bad") cholesterol. Health Canada recommends choosing foods with 5% DV or less when possible. <strong>10% DV</strong> is getting close to the "a lot" threshold — worth noting.
+        </div>
+      </div>
+
+      <div class="explainer-card" id="exp-transfat" data-key="transfat">
+        <div class="explainer-header">
+          <span class="explainer-icon">⚠️</span>
+          <span class="explainer-title">Trans Fat</span>
+          <span class="explainer-badge badge-limit">Limit</span>
+        </div>
+        <div class="explainer-body">
+          Trans fats raise bad cholesterol AND lower good cholesterol — a double hit to heart health. Health Canada has banned artificial trans fats in food since 2018. <strong>0g is ideal.</strong> Small amounts may still appear naturally in some dairy and meat products.
+        </div>
+      </div>
+
+      <div class="explainer-card" id="exp-sodium" data-key="sodium">
+        <div class="explainer-header">
+          <span class="explainer-icon">🧂</span>
+          <span class="explainer-title">Sodium</span>
+          <span class="explainer-badge badge-limit">Limit</span>
+        </div>
+        <div class="explainer-body">
+          Sodium (salt) is the #1 thing to watch on Canadian nutrition labels. Most Canadians eat almost double the recommended amount. <strong>21% DV in one serving is high</strong> — nearly a quarter of your daily max. High sodium is linked to high blood pressure and heart disease. Look for products with 5% DV or less.
+        </div>
+      </div>
+
+      <div class="explainer-card" id="exp-carbs" data-key="carbs">
+        <div class="explainer-header">
+          <span class="explainer-icon">🍞</span>
+          <span class="explainer-title">Total Carbohydrate</span>
+          <span class="explainer-badge badge-watch">Watch</span>
+        </div>
+        <div class="explainer-body">
+          Carbs are your body's main energy source. But not all carbs are the same. This number includes fibre (good!), natural sugars, and added sugars. The key is the <em>quality</em> of carbs — whole grains and vegetables are far better than refined carbs and sugary snacks.
+        </div>
+      </div>
+
+      <div class="explainer-card" id="exp-fibre" data-key="fibre">
+        <div class="explainer-header">
+          <span class="explainer-icon">🌿</span>
+          <span class="explainer-title">Dietary Fibre</span>
+          <span class="explainer-badge badge-good">Good</span>
+        </div>
+        <div class="explainer-body">
+          Fibre is one of the most important nutrients most Canadians don't get enough of. It supports digestion, helps you feel full, lowers cholesterol, and reduces risk of diabetes and heart disease. <strong>14% DV is great!</strong> Aim for 25–38g per day from whole grains, legumes, fruits and vegetables.
+        </div>
+      </div>
+
+      <div class="explainer-card" id="exp-sugar" data-key="sugar">
+        <div class="explainer-header">
+          <span class="explainer-icon">🍬</span>
+          <span class="explainer-title">Total Sugars</span>
+          <span class="explainer-badge badge-watch">Watch</span>
+        </div>
+        <div class="explainer-body">
+          This includes both natural sugars (from fruit, dairy) and added sugars (from processing). Canada's label doesn't separate them — check the ingredients list for clues. Words ending in "-ose" (glucose, fructose, sucrose) and syrups are added sugars. Limit added sugars to less than 10% of daily calories.
+        </div>
+      </div>
+
+      <div class="explainer-card" id="exp-protein" data-key="protein">
+        <div class="explainer-header">
+          <span class="explainer-icon">💪</span>
+          <span class="explainer-title">Protein</span>
+          <span class="explainer-badge badge-good">Good</span>
+        </div>
+        <div class="explainer-body">
+          Protein builds and repairs tissues, makes enzymes, and keeps you feeling full. No % DV is shown in Canada because protein deficiency is rare. Adults need roughly 0.8g per kg of body weight daily. Prioritize plant-based proteins (legumes, tofu, nuts) alongside poultry, fish, and eggs.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- MEAL TIMING -->
+<section id="timing">
+  <div class="section-label">✦ Daily Guide</div>
+  <div class="section-title">Eating through the day</div>
+  <p class="section-desc">When you eat matters as much as what you eat. Explore a balanced day of eating based on Food Guide principles — click each meal to see food ideas.</p>
+
+  <div class="timeline">
+    <div class="timeline-stop active" onclick="showMeal('breakfast', this)">
+      <div style="font-size:0.75rem;color:var(--yellow);font-weight:700">7:00 AM</div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-meal">Breakfast</div>
+      <div class="timeline-note">Fuel your morning with protein + complex carbs</div>
+    </div>
+    <div class="timeline-stop" onclick="showMeal('snack1', this)">
+      <div style="font-size:0.75rem;color:var(--yellow);font-weight:700">10:00 AM</div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-meal">Morning Snack</div>
+      <div class="timeline-note">Optional — only if hungry</div>
+    </div>
+    <div class="timeline-stop" onclick="showMeal('lunch', this)">
+      <div style="font-size:0.75rem;color:var(--yellow);font-weight:700">12:30 PM</div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-meal">Lunch</div>
+      <div class="timeline-note">Biggest meal for many — apply the plate model</div>
+    </div>
+    <div class="timeline-stop" onclick="showMeal('snack2', this)">
+      <div style="font-size:0.75rem;color:var(--yellow);font-weight:700">3:30 PM</div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-meal">Afternoon Snack</div>
+      <div class="timeline-note">Avoid energy crashes before dinner</div>
+    </div>
+    <div class="timeline-stop" onclick="showMeal('dinner', this)">
+      <div style="font-size:0.75rem;color:var(--yellow);font-weight:700">6:00 PM</div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-meal">Dinner</div>
+      <div class="timeline-note">Shared meal — social eating encouraged</div>
+    </div>
+  </div>
+
+  <div class="meal-detail active" id="meal-breakfast">
+    <h3>🌅 Breakfast Ideas</h3>
+    <div class="meal-detail-grid">
+      <div class="meal-item"><div class="meal-item-icon">🥣</div><strong>Oatmeal</strong> with berries, seeds, and a drizzle of honey</div>
+      <div class="meal-item"><div class="meal-item-icon">🥚</div><strong>Eggs</strong> on whole grain toast with sliced tomato</div>
+      <div class="meal-item"><div class="meal-item-icon">🥤</div><strong>Smoothie</strong> with spinach, banana, Greek yogurt, and flax</div>
+    </div>
+  </div>
+  <div class="meal-detail" id="meal-snack1">
+    <h3>☕ Morning Snack Ideas</h3>
+    <div class="meal-detail-grid">
+      <div class="meal-item"><div class="meal-item-icon">🍎</div><strong>Apple</strong> with a tablespoon of almond butter</div>
+      <div class="meal-item"><div class="meal-item-icon">🧀</div><strong>Cottage cheese</strong> with cucumber slices</div>
+      <div class="meal-item"><div class="meal-item-icon">🥕</div><strong>Veggies & hummus</strong> — filling and high in fibre</div>
+    </div>
+  </div>
+  <div class="meal-detail" id="meal-lunch">
+    <h3>🌿 Lunch Ideas</h3>
+    <div class="meal-detail-grid">
+      <div class="meal-item"><div class="meal-item-icon">🥗</div><strong>Grain bowl</strong>: quinoa, roasted veggies, chickpeas, tahini</div>
+      <div class="meal-item"><div class="meal-item-icon">🐟</div><strong>Tuna wrap</strong> on whole wheat with spinach and avocado</div>
+      <div class="meal-item"><div class="meal-item-icon">🍲</div><strong>Lentil soup</strong> with a side salad and whole grain bread</div>
+    </div>
+  </div>
+  <div class="meal-detail" id="meal-snack2">
+    <h3>🍊 Afternoon Snack Ideas</h3>
+    <div class="meal-detail-grid">
+      <div class="meal-item"><div class="meal-item-icon">🍊</div><strong>Orange</strong> or other citrus fruit — vitamin C boost</div>
+      <div class="meal-item"><div class="meal-item-icon">🥜</div><strong>Mixed nuts</strong> (small handful) — healthy fats + protein</div>
+      <div class="meal-item"><div class="meal-item-icon">🫐</div><strong>Greek yogurt</strong> with a handful of blueberries</div>
+    </div>
+  </div>
+  <div class="meal-detail" id="meal-dinner">
+    <h3>🍽️ Dinner Ideas</h3>
+    <div class="meal-detail-grid">
+      <div class="meal-item"><div class="meal-item-icon">🐠</div><strong>Baked salmon</strong> with roasted broccoli and brown rice</div>
+      <div class="meal-item"><div class="meal-item-icon">🫘</div><strong>Black bean tacos</strong> with shredded cabbage and salsa</div>
+      <div class="meal-item"><div class="meal-item-icon">🍗</div><strong>Stir-fry</strong> with chicken, bok choy, bell peppers, soba noodles</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-brand">🍁 Canada's Food Guide</div>
+    <div class="footer-note">This is a reimagined, interactive version of Canada's official Food Guide, created to improve adult engagement and learning. Content is based on Health Canada's 2019 guidelines.</div>
+  </div>
+  <div>
+    <h4>Tools</h4>
+    <ul>
+      <li><a href="#builder">Plate Builder</a></li>
+      <li><a href="#quiz">Knowledge Quiz</a></li>
+      <li><a href="#decoder">Label Decoder</a></li>
+      <li><a href="#timing">Meal Timing</a></li>
+    </ul>
+  </div>
+  <div>
+    <h4>Learn</h4>
+    <ul>
+      <li><a href="#tips">Healthy Eating Tips</a></li>
+      <li><a href="https://food-guide.canada.ca/en/guidelines/" target="_blank">Dietary Guidelines ↗</a></li>
+      <li><a href="https://food-guide.canada.ca/en/kitchen/" target="_blank">Recipes ↗</a></li>
+    </ul>
+  </div>
+  <div>
+    <h4>Official Sources</h4>
+    <ul>
+      <li><a href="https://food-guide.canada.ca/en/" target="_blank">food-guide.canada.ca ↗</a></li>
+      <li><a href="https://www.canada.ca/en/health-canada.html" target="_blank">Health Canada ↗</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-disclaimer">
+  <span>Based on Canada's Food Guide (Health Canada, 2019). This is a UX improvement prototype.</span>
+  <span>Government of Canada · Gouvernement du Canada 🍁</span>
+</div>
+
+<script>
+// ─── PLATE BUILDER ───────────────────────────────────────────────────────────
+const foods = { veg: 0, protein: 0, grains: 0, water: 0 };
+const maxPerFood = 5;
+const colors = { veg: '#4CAF50', protein: '#FF7043', grains: '#FDD835', water: '#42A5F5' };
+const idealRatio = { veg: 0.5, protein: 0.25, grains: 0.25, water: 0 };
+
+function adjustFood(type, delta) {
+  foods[type] = Math.max(0, Math.min(maxPerFood, foods[type] + delta));
+  document.getElementById('count-' + type).textContent = foods[type];
+  const card = document.getElementById('card-' + type);
+  card.classList.toggle('active', foods[type] > 0);
+  renderPlate();
+}
+
+function renderPlate() {
+  const canvas = document.getElementById('plateCanvas');
+  const ctx = canvas.getContext('2d');
+  const total = foods.veg + foods.protein + foods.grains + foods.water;
+  ctx.clearRect(0, 0, 300, 300);
+
+  if (total === 0) {
+    ctx.beginPath(); ctx.arc(150, 150, 148, 0, Math.PI * 2);
+    ctx.fillStyle = '#f0ebe4'; ctx.fill();
+    document.getElementById('plateScore').textContent = '0';
+    document.getElementById('plateFeedback').innerHTML = '👆 Start adding foods to see how your plate compares to the Food Guide recommendation.';
+    return;
+  }
+
+  const order = ['veg', 'protein', 'grains', 'water'];
+  let startAngle = -Math.PI / 2;
+
+  order.forEach(key => {
+    if (foods[key] === 0) return;
+    const slice = (foods[key] / total) * Math.PI * 2;
+    ctx.beginPath();
+    ctx.moveTo(150, 150);
+    ctx.arc(150, 150, 148, startAngle, startAngle + slice);
+    ctx.closePath();
+    ctx.fillStyle = colors[key];
+    ctx.fill();
+    ctx.strokeStyle = 'white'; ctx.lineWidth = 2; ctx.stroke();
+    startAngle += slice;
+  });
+
+  // Score
+  const vegRatio = total > 0 ? foods.veg / total : 0;
+  const protRatio = total > 0 ? foods.protein / total : 0;
+  const grainsRatio = total > 0 ? foods.grains / total : 0;
+  const score = Math.round(
+    Math.max(0, 100 - (
+      Math.abs(vegRatio - 0.5) * 100 +
+      Math.abs(protRatio - 0.25) * 80 +
+      Math.abs(grainsRatio - 0.25) * 80
+    ))
+  );
+
+  document.getElementById('plateScore').textContent = score;
+
+  // Feedback
+  let fb = '';
+  if (score >= 80) { fb = '🎉 <strong>Excellent plate!</strong> Your meal closely follows the Food Guide model. Great balance of vegetables, protein, and whole grains.'; }
+  else if (score >= 55) { fb = '👍 <strong>Good start!</strong> '; }
+  else { fb = '💡 <strong>Room to improve.</strong> '; }
+
+  if (vegRatio < 0.4 && score < 80) fb += `Try adding more <strong>vegetables & fruits</strong> — they should make up half your plate. `;
+  if (protRatio < 0.2 && score < 80) fb += `Consider adding a <strong>protein food</strong> like legumes, fish, or eggs. `;
+  if (grainsRatio < 0.15 && score < 80) fb += `Don't forget <strong>whole grains</strong> for lasting energy. `;
+  if (vegRatio > 0.65 && score < 80) fb += `Great veggie intake! Balance it with some protein and grains. `;
+
+  document.getElementById('plateFeedback').innerHTML = fb;
+}
+
+// ─── QUIZ ─────────────────────────────────────────────────────────────────────
+const questions = [
+  {
+    q: "According to Canada's Food Guide, what should make up half of your plate at meals?",
+    options: ["Protein foods like meat and eggs", "Whole grain foods like rice and bread", "Vegetables and fruits", "Dairy products like milk and cheese"],
+    correct: 2,
+    explanation: "Correct! Canada's Food Guide recommends filling half your plate with vegetables and fruits at each meal. They're packed with fibre, vitamins, and minerals — and most Canadians don't eat nearly enough of them."
+  },
+  {
+    q: "Which of these is considered a \"protein food\" according to Canada's Food Guide?",
+    options: ["White bread", "Lentils and chickpeas", "Orange juice", "Butter"],
+    correct: 1,
+    explanation: "Lentils and chickpeas are excellent plant-based protein foods! The Food Guide encourages eating more protein from plant sources (legumes, tofu, nuts, seeds) alongside fish, shellfish, eggs, and lean meat."
+  },
+  {
+    q: "What is the main recommended drink according to Canada's Food Guide?",
+    options: ["Low-fat milk", "Orange juice", "Water", "Green tea"],
+    correct: 2,
+    explanation: "Water is the drink of choice recommended by Canada's Food Guide. It hydrates without added sugars or calories. Sugary drinks — including 100% fruit juice — are not recommended as a regular drink."
+  },
+  {
+    q: "Canada's Food Guide advises you to limit which type of food?",
+    options: ["Fresh vegetables", "Legumes and beans", "Highly processed foods", "Whole grain breads"],
+    correct: 2,
+    explanation: "Highly processed foods — like chips, packaged baked goods, hot dogs, and fast food — are high in sodium, saturated fat, and added sugar. The Food Guide recommends making them occasional choices rather than daily staples."
+  },
+  {
+    q: "On a Canadian Nutrition Facts label, a % Daily Value of 5% or less means the food has...",
+    options: ["A lot of that nutrient", "A little of that nutrient", "Exactly the right amount", "An unacceptable level"],
+    correct: 1,
+    explanation: "The \"5 and 15\" rule: 5% DV or less = a little of that nutrient; 15% DV or more = a lot. This helps you quickly identify foods high in sodium or saturated fat (limit those) and high in fibre or vitamins (encourage those)."
+  }
+];
+
+let currentQ = 0;
+let score = 0;
+let answered = false;
+
+function startQuiz() {
+  currentQ = 0; score = 0; answered = false;
+  document.getElementById('quizMain').style.display = 'block';
+  document.getElementById('quizResult').classList.remove('show');
+  loadQuestion();
+}
+
+function loadQuestion() {
+  answered = false;
+  const q = questions[currentQ];
+  document.getElementById('quizNum').textContent = `Question ${currentQ + 1} of ${questions.length}`;
+  document.getElementById('quizProgress').style.width = `${(currentQ / questions.length) * 100}%`;
+  document.getElementById('quizQuestion').textContent = q.q;
+
+  const optContainer = document.getElementById('quizOptions');
+  optContainer.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-option';
+    btn.textContent = opt;
+    btn.onclick = () => selectAnswer(i, btn);
+    optContainer.appendChild(btn);
+  });
+
+  document.getElementById('quizFeedback').className = 'quiz-feedback';
+  document.getElementById('quizFeedback').textContent = '';
+  document.getElementById('quizNext').classList.remove('show');
+  document.getElementById('quizNext').textContent = currentQ < questions.length - 1 ? 'Next Question →' : 'See Results →';
+}
+
+function selectAnswer(idx, btn) {
+  if (answered) return;
+  answered = true;
+  const q = questions[currentQ];
+  const opts = document.querySelectorAll('.quiz-option');
+
+  opts.forEach((o, i) => {
+    if (i === q.correct) o.classList.add('correct');
+    else if (i === idx && idx !== q.correct) o.classList.add('wrong');
+  });
+
+  const fb = document.getElementById('quizFeedback');
+  if (idx === q.correct) {
+    score++;
+    fb.className = 'quiz-feedback correct-fb show';
+    fb.textContent = '✓ ' + q.explanation;
+  } else {
+    fb.className = 'quiz-feedback wrong-fb show';
+    fb.textContent = '✗ ' + q.explanation;
+  }
+  document.getElementById('quizNext').classList.add('show');
+}
+
+function nextQuestion() {
+  currentQ++;
+  if (currentQ >= questions.length) {
+    showResult();
+  } else {
+    loadQuestion();
+  }
+}
+
+function showResult() {
+  document.getElementById('quizProgress').style.width = '100%';
+  document.getElementById('quizMain').style.display = 'none';
+  const result = document.getElementById('quizResult');
+  result.classList.add('show');
+  document.getElementById('resultScore').textContent = `${score}/${questions.length}`;
+  const msgs = [
+    "Keep learning! Explore the tips and tools above to build your knowledge.",
+    "Not bad! A few more reads through the guide and you'll be a pro.",
+    "Good work! You know your Food Guide basics.",
+    "Great job! You've got a solid understanding of healthy eating.",
+    "Perfect score! You're a Canada's Food Guide expert! 🏆"
+  ];
+  document.getElementById('resultMsg').textContent = msgs[score] || msgs[0];
+}
+
+// ─── TIPS ─────────────────────────────────────────────────────────────────────
+function toggleTip(el) {
+  const detail = el.nextElementSibling;
+  const isOpen = detail.classList.contains('open');
+  detail.classList.toggle('open', !isOpen);
+  el.textContent = isOpen ? 'Learn more ↓' : 'Show less ↑';
+}
+
+// ─── LABEL DECODER ─────────────────────────────────────────────────────────
+function highlightLabel(row, key) {
+  document.querySelectorAll('.label-row').forEach(r => r.classList.remove('highlighted'));
+  row.classList.add('highlighted');
+  document.querySelectorAll('.explainer-card').forEach(c => {
+    c.classList.remove('active');
+    c.querySelector('.explainer-body').classList.remove('open');
+  });
+  const target = document.getElementById('exp-' + key);
+  if (target) {
+    target.classList.add('active');
+    target.querySelector('.explainer-body').classList.add('open');
+    target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+// ─── MEAL TIMING ─────────────────────────────────────────────────────────────
+function showMeal(id, el) {
+  document.querySelectorAll('.meal-detail').forEach(d => d.classList.remove('active'));
+  document.querySelectorAll('.timeline-stop').forEach(s => s.classList.remove('active'));
+  document.getElementById('meal-' + id).classList.add('active');
+  el.classList.add('active');
+}
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+startQuiz();
+renderPlate();
+</script>
+</body>
+</html>
